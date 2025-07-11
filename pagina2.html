@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El balcón - Página 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Special Elite', cursive;
+      background: url('img/texturapapel.jpg') repeat;
+      background-size: cover;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contenido {
+      width: 90%;
+      max-width: 1200px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .texto-cuento {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 1rem;
+      max-height: 35vh;
+      overflow: auto;
+    }
+
+    .imagen-casa {
+      width: 200%;
+      max-width: 800px;
+      max-height: 45vh;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .btn-siguiente,
+    .btn-atras {
+      position: fixed;
+      bottom: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    .btn-siguiente:hover,
+    .btn-atras:hover {
+      background: rgb(78, 3, 3);
+    }
+
+    .btn-siguiente {
+      right: 1.5rem;
+    }
+
+    .btn-atras {
+      left: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenido">
+    <div class="texto-cuento">
+      Había una ciudad que a mí me gustaba visitar en verano. En esa época casi todo un
+      barrio se iba a un balneario cercano. Una de las casas abandonadas era muy antigua; en ella habían instalado un hotel y apenas empezaba el verano la casa se ponía triste, iba perdiendo sus mejores familias y quedaba habitada nada más que por los sirvientes.
+    </div>
+
+    <img src="img/Casa.png" alt="Casa abandonada" class="imagen-casa" />
+  </div>
+
+ 
+  <button class="btn-siguiente" onclick="window.location.href='pagina3.html'">→</button>
+  <button class="btn-atras" onclick="window.location.href='pagina1.html'">←</button>
+
+  <script>
+    // Añadir efecto de caída de notas musicales (si implementás el CSS para .nota-musical)
+    function crearNotaMusical() {
+      const nota = document.createElement('div');
+      nota.className = 'nota-musical';
+      nota.style.left = Math.random() * 90 + '%';
+      nota.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(nota);
+    }
+
+    
+  </script>
+</body>
+</html>

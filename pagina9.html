@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El balcón - Página 9</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Special Elite', cursive;
+      background: url('img/texturapapel.jpg') repeat;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .contenido {
+      width: 100%;
+      max-width: 1400px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .disposicion-horizontal {
+      display: grid;
+      grid-template-columns: auto auto 600px;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .img-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .img-balcon {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      display: block;
+    }
+
+    .telefono-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .img-telefono {
+      width: 150px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .img-telefono:hover {
+      transform: scale(1.2);
+    }
+
+    .img-telefono-descolgado {
+      width: 150px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
+      display: none;
+    }
+
+    .img-telefono-descolgado.active {
+      display: block;
+    }
+
+    .texto {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #333;
+      text-align: left;
+      max-height: 75vh;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+      scrollbar-width: thin;
+      scrollbar-color: transparent transparent;
+    }
+
+    .texto::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .texto::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+
+    .texto:hover::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para palabra clickeable "balcón" */
+    .texto #balcon-click {
+      color: darkred;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Oculto por defecto */
+    #balcon-img {
+      display: none;
+    }
+
+    .balcon-text {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .balcon-text:hover {
+      transform: scale(1.2);
+    }
+
+    .balcon-image {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3000;
+      width: 100%;
+      height: auto;
+      max-width: 2000px;
+      max-height: 100vh;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .balcon-image.active {
+      display: block;
+    }
+
+    .btn-siguiente,
+    .btn-atras {
+      position: fixed;
+      bottom: 1.5rem;
+      padding: 0.6rem 1.2rem;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      z-index: 2;
+    }
+
+    .btn-siguiente:hover,
+    .btn-atras:hover {
+      background: rgb(78, 3, 3);
+      color: #ffffff;
+    }
+
+    .btn-siguiente {
+      right: 1.5rem;
+    }
+
+    .btn-atras {
+      left: 1.5rem;
+    }
+
+    /* Flash intenso para rayos */
+    #flash-rayo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: opacity 0.05s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Flash de tormenta -->
+  <div id="flash-rayo"></div>
+
+  <!-- Audio del teléfono -->
+  <audio id="audioTelefono" preload="auto" style="display: none;">
+    <source src="audios/telefono.mp3" type="audio/mp3">
+  </audio>
+
+  <div class="contenido">
+    <div class="disposicion-horizontal">
+      <!-- Contenedor de la imagen del balcón (oculto inicialmente) -->
+      <div class="img-wrapper" id="balcon-img">
+        <img src="img/Balcón roto.png" alt="Balcón roto" class="img-balcon" />
+      </div>
+
+      <!-- Teléfono al medio -->
+      <div class="telefono-wrapper">
+        <img src="img/telefono.png" alt="Teléfono" class="img-telefono" id="telefono" />
+        <img src="img/telefono descolgado.png" alt="Teléfono descolgado" class="img-telefono-descolgado" id="telefonoDescolgado" />
+      </div>
+
+      <!-- Texto a la derecha -->
+      <div class="texto">
+        —Anteayer había tormenta, y a la tardecita nosotros estábamos en el comedor.<br>
+        —¿Así que le hizo mal esa luz?<br>
+        —¡Pero, mi amigo! ¿Usted no ha entendido?<br>
+        —¿Qué?<br>
+        —¡Hemos perdido  <span id="balcon-click">EL BALCÓN</span>! ¡El balcón se cayó! ¡Aquella no era la luz del balcón!<br>
+        —Pero un balcón…
+      </div>
+      <img src="img/Balcón roto.png" alt="Balcón roto" class="balcon-image" id="balconImage">
+    </div>
+
+    <!-- Botones de navegación -->
+    <button class="btn-siguiente" onclick="window.location.href='pagina10.html'">→</button>
+    <button class="btn-atras" onclick="window.location.href='pagina8.html'">←</button>
+  </div>
+
+  <script>
+    const telefono = document.querySelector('.img-telefono');
+    const ring = document.getElementById('ring');
+    const flash = document.getElementById('flash-rayo');
+    const balconClick = document.getElementById('balcon-click');
+    const balconImg = document.getElementById('balcon-img');
+
+    // Sonido teléfono requiere click inicial para permitir reproducción
+    let puedeSonar = false;
+    telefono.addEventListener('click', () => {
+      puedeSonar = true;
+      ring.currentTime = 0;
+      ring.play();
+    });
+
+    telefono.addEventListener('mouseenter', () => {
+      if (puedeSonar) {
+        ring.currentTime = 0;
+        ring.play();
+      }
+    });
+
+    telefono.addEventListener('mouseleave', () => {
+      ring.pause();
+      ring.currentTime = 0;
+    });
+
+    // Mostrar imagen del balcón al pasar mouse y ocultar al salir
+    balconClick.addEventListener('mouseenter', () => {
+      balconImg.style.display = 'flex';
+    });
+    balconClick.addEventListener('mouseleave', () => {
+      balconImg.style.display = 'none';
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const telefono = document.getElementById('telefono');
+      const telefonoDescolgado = document.getElementById('telefonoDescolgado');
+      const audioTelefono = document.getElementById('audioTelefono');
+      let telefonoDescolgadoEstado = false;
+      
+      function toggleTelefono() {
+        if (telefonoDescolgadoEstado) {
+          // Si está descolgado, lo volvemos a colgar
+          telefono.style.display = 'block';
+          telefonoDescolgado.style.display = 'none';
+          audioTelefono.pause();
+          telefonoDescolgadoEstado = false;
+        } else {
+          // Si está colgado, lo descolgamos
+          telefono.style.display = 'none';
+          telefonoDescolgado.style.display = 'block';
+          audioTelefono.currentTime = 0;
+          audioTelefono.play();
+          telefonoDescolgadoEstado = true;
+        }
+      }
+
+      // Añadir evento click tanto al teléfono como al teléfono descolgado
+      telefono.addEventListener('click', toggleTelefono);
+      telefonoDescolgado.addEventListener('click', toggleTelefono);
+    });
+  </script>
+
+  <script>
+    const balconText = document.getElementById('balconText');
+    const balconImage = document.getElementById('balconImage');
+
+    balconText.addEventListener('click', () => {
+      balconImage.classList.add('active');
+    });
+  </script>
+
+</body>
+</html>

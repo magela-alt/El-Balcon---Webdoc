@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>El balcón - Página 5</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Special Elite', cursive;
+      background: url('img/texturapapel.jpg') repeat;
+      background-size: cover;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contenido {
+      width: 100%;
+      max-width: 1200px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .contenedor-imagen {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      height: 80vh; /* Imagen ocupa casi toda la pantalla */
+      overflow: hidden;
+    }
+
+    .imagen-principal {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .texto-cuento {
+      font-size: 1.2rem;
+      line-height: 1.4;
+      color: #333;
+      text-align: center;
+      padding: 0.5rem;
+      max-height: 10vh;
+      overflow: hidden;
+    }
+
+    .btn-siguiente,
+    .btn-atras {
+      position: fixed;
+      bottom: 1rem;
+      padding: 0.5rem 1rem;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Special Elite', cursive;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+
+    .btn-siguiente:hover,
+    .btn-atras:hover {
+      background: rgb(78, 3, 3);
+    }
+
+    .btn-siguiente {
+      right: 1.5rem;
+    }
+
+    .btn-atras {
+      left: 1.5rem;
+    }
+
+    .hotspot {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .hotspot.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hotspot img {
+      width: 250px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Posiciones específicas */
+    .hotspot-enredaderas {
+      top: 30%;
+      right: 20%;
+      background-color: antiquewhite;
+    }
+
+    .hotspot-balcon {
+      top: 15%;
+      left: 45%;
+      background-color: antiquewhite;
+    }
+
+    .hotspot-comedor {
+      bottom: 20%;
+      left: 25%;
+      background-color: antiquewhite;
+    }
+
+   .hotspot-pasillo {
+  top: 10%; /* estaba en 15% */
+  left: 10%; /* más lejos del balcón */
+  
+}
+  </style>
+</head>
+<body>
+  <div class="contenido">
+    <div class="contenedor-imagen">
+      <img src="img/Casa.png" alt="Casa principal" class="imagen-principal" id="casaPrincipal" />
+      <!-- Hotspots -->
+      <div class="hotspot hotspot-enredaderas"><img src="img/jardín.png" alt="Jardín" /></div>
+      <div class="hotspot hotspot-balcon"><img src="img/balcon.png" alt="Balcón" /></div>
+      <div class="hotspot hotspot-comedor"><img src="img/Comedor.png" alt="Comedor" /></div>
+      <div class="hotspot hotspot-pasillo"><img src="img/pasillo con sombrillas 1.png" alt="Pasillo con sombrillas" /></div>
+    </div>
+    <div class="texto-cuento">
+      Había una vez un balcón que daba a un mundo lleno de secretos...
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <button class="btn-siguiente" onclick="window.location.href='pagina5.html'">→</button>
+  <button class="btn-atras" onclick="window.location.href='pagina4.html'">←</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const casaPrincipal = document.getElementById('casaPrincipal');
+      const hotspots = document.querySelectorAll('.hotspot');
+
+      casaPrincipal.addEventListener('mousemove', function(e) {
+        const rect = casaPrincipal.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        hotspots.forEach(hotspot => {
+          const hsRect = hotspot.getBoundingClientRect();
+          const hsX = hsRect.left - rect.left + hsRect.width / 2;
+          const hsY = hsRect.top - rect.top + hsRect.height / 2;
+
+          const distance = Math.sqrt(Math.pow(x - hsX, 2) + Math.pow(y - hsY, 2));
+          if (distance < 100) {
+            hotspot.classList.add('active');
+          } else {
+            hotspot.classList.remove('active');
+          }
+        });
+      });
+
+      casaPrincipal.addEventListener('mouseleave', function() {
+        hotspots.forEach(hs => hs.classList.remove('active'));
+      });
+    });
+  </script>
+</body>
+</html>
